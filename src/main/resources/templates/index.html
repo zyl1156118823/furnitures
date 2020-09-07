@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login Form</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+<script src="/js/jquery.min.js" type="text/javascript"></script>
+</head>
+<body>
+	<div class="main">
+		<div class="login">
+			<h1>管理系统</h1>
+			<div class="inset">
+				<!--start-main-->
+				<form>
+			         <div>
+			         	<h2>管理登录</h2>
+						<span><label>用户名</label></span>
+						<span><input type="text" class="textbox" id="stuid" ></span>
+					 </div>
+					 <div>
+						<span><label>密码</label></span>
+					    <span><input type="password" class="password" id="password"></span>
+					 </div>
+					<div class="control-wrapper">
+						<input type="button" value="登录" class="btn btn-info"
+							   onclick="login()">
+					</div>
+					</form>
+				</div>
+			</div>
+		<!--//end-main-->
+		</div>
+
+<div class="copy-right">
+	  
+
+</div>
+<div style="text-align:center;">
+ 
+</div>
+	<script>
+		function login() {
+			var stuid = $("#stuid").val();//获取账号
+			var password = $("#password").val();//获取密码
+			$.ajax({
+						url : "dologin",//登录地址
+						data : {
+							"stuid" : stuid,
+							"password" : password
+						},
+						success : function(data) {//请求成功函数
+							if(data=="student"){
+								alert("登录成功");
+								//页面跳转-》主页面
+								window.location.href="student"
+							}else if(data=="admin"){
+								window.location.href="admin"
+							} else{
+								//换掉模态框里的内容html(),text(),val()
+								alert("请检查您的账号或者密码");
+
+							}
+
+						},
+						error : function() {//请求失败函数
+							alert("登录失败");
+						}
+					}
+
+			);
+		}
+	</script>
+</body>
+</html>
