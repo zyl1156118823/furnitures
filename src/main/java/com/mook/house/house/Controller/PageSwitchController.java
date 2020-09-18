@@ -35,13 +35,15 @@ public class PageSwitchController {
 
     @RequestMapping("/dologin")
     @ResponseBody
-    public String dologin(@RequestParam("stuid") String username, @RequestParam("password")String password){
+    public String dologin(@RequestParam("stuid") String username, @RequestParam("password")String password,HttpSession session){
 
             UserEntity u = userService.findUserByUsernameAndPassword(username,password);
 //            System.out.println(u);
             if(u!=null){
-                //session.setAttribute("username",u.getUsername());
-            byte role=u.getIsAdmin();
+             session.setAttribute("username",u.getName());
+             session.setAttribute("Departmentid",u.getDepartment_id());
+            String role=u.getIs_admin();
+                session.setAttribute("role",role);
                 System.out.println(role);
                 return "student";
             }

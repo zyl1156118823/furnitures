@@ -9,18 +9,10 @@ public class UserEntity {
     private String name;
     private String phone;
     private String passwd;
-    private Date createTime;
-    private byte enable;
-    private int departmentId;
-    private byte isAdmin;
-
-    public byte getIsAdmin() {
-        return isAdmin;
-    }
-
-    public void setIsAdmin(byte isAdmin) {
-        this.isAdmin = isAdmin;
-    }
+    private Date create_time;
+    private String enable;
+    private String department_id;
+    private String is_admin;
 
     public long getId() {
         return id;
@@ -30,7 +22,6 @@ public class UserEntity {
         this.id = id;
     }
 
-
     public String getName() {
         return name;
     }
@@ -38,7 +29,6 @@ public class UserEntity {
     public void setName(String name) {
         this.name = name;
     }
-
 
     public String getPhone() {
         return phone;
@@ -48,7 +38,6 @@ public class UserEntity {
         this.phone = phone;
     }
 
-
     public String getPasswd() {
         return passwd;
     }
@@ -57,30 +46,36 @@ public class UserEntity {
         this.passwd = passwd;
     }
 
-
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCreate_time() {
+        return create_time;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreate_time(Date create_time) {
+        this.create_time = create_time;
     }
 
-    public byte getEnable() {
+    public String getEnable() {
         return enable;
     }
 
-    public void setEnable(byte enable) {
+    public void setEnable(String enable) {
         this.enable = enable;
     }
 
-
-    public int getDepartmentId() {
-        return departmentId;
+    public String getDepartment_id() {
+        return department_id;
     }
 
-    public void setDepartmentId(int departmentId) {
-        this.departmentId = departmentId;
+    public void setDepartment_id(String department_id) {
+        this.department_id = department_id;
+    }
+
+    public String getIs_admin() {
+        return is_admin;
+    }
+
+    public void setIs_admin(String is_admin) {
+        this.is_admin = is_admin;
     }
 
     @Override
@@ -89,16 +84,17 @@ public class UserEntity {
         if (o == null || getClass() != o.getClass()) return false;
         UserEntity that = (UserEntity) o;
         return id == that.id &&
-                enable == that.enable &&
-                departmentId == that.departmentId &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(phone, that.phone) &&
                 Objects.equals(passwd, that.passwd) &&
-                Objects.equals(createTime, that.createTime);
+                Objects.equals(create_time, that.create_time) &&
+                Objects.equals(enable, that.enable) &&
+                Objects.equals(department_id, that.department_id) &&
+                Objects.equals(is_admin, that.is_admin);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, phone, passwd, createTime, enable, departmentId);
+        return Objects.hash(id, name, phone, passwd, create_time, enable, department_id, is_admin);
     }
 }
