@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Dao.ProductMapper" >
+  <resultMap id="BaseResultMap" type="domain.Product" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="cpm" property="cpm" jdbcType="VARCHAR" />
+    <result column="hh" property="hh" jdbcType="VARCHAR" />
+    <result column="txm" property="txm" jdbcType="VARCHAR" />
+    <result column="lb" property="lb" jdbcType="VARCHAR" />
+    <result column="style" property="style" jdbcType="VARCHAR" />
+    <result column="sfdz" property="sfdz" jdbcType="VARCHAR" />
+    <result column="syrq" property="syrq" jdbcType="VARCHAR" />
+    <result column="jgrq" property="jgrq" jdbcType="DATE" />
+    <result column="cpbt" property="cpbt" jdbcType="VARCHAR" />
+    <result column="bz" property="bz" jdbcType="VARCHAR" />
+    <result column="tplj" property="tplj" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, cpm, hh, txm, lb, style, sfdz, syrq, jgrq, cpbt, bz, tplj, create_time, create_by, 
+    update_time, update_by
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="domain.ProductExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="domain.ProductExample" >
+    delete from product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="domain.Product" >
+    insert into product (id, cpm, hh, 
+      txm, lb, style, sfdz, 
+      syrq, jgrq, cpbt, bz, 
+      tplj, create_time, create_by, 
+      update_time, update_by)
+    values (#{id,jdbcType=INTEGER}, #{cpm,jdbcType=VARCHAR}, #{hh,jdbcType=VARCHAR}, 
+      #{txm,jdbcType=VARCHAR}, #{lb,jdbcType=VARCHAR}, #{style,jdbcType=VARCHAR}, #{sfdz,jdbcType=VARCHAR}, 
+      #{syrq,jdbcType=VARCHAR}, #{jgrq,jdbcType=DATE}, #{cpbt,jdbcType=VARCHAR}, #{bz,jdbcType=VARCHAR}, 
+      #{tplj,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="domain.Product" >
+    insert into product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cpm != null" >
+        cpm,
+      </if>
+      <if test="hh != null" >
+        hh,
+      </if>
+      <if test="txm != null" >
+        txm,
+      </if>
+      <if test="lb != null" >
+        lb,
+      </if>
+      <if test="style != null" >
+        style,
+      </if>
+      <if test="sfdz != null" >
+        sfdz,
+      </if>
+      <if test="syrq != null" >
+        syrq,
+      </if>
+      <if test="jgrq != null" >
+        jgrq,
+      </if>
+      <if test="cpbt != null" >
+        cpbt,
+      </if>
+      <if test="bz != null" >
+        bz,
+      </if>
+      <if test="tplj != null" >
+        tplj,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cpm != null" >
+        #{cpm,jdbcType=VARCHAR},
+      </if>
+      <if test="hh != null" >
+        #{hh,jdbcType=VARCHAR},
+      </if>
+      <if test="txm != null" >
+        #{txm,jdbcType=VARCHAR},
+      </if>
+      <if test="lb != null" >
+        #{lb,jdbcType=VARCHAR},
+      </if>
+      <if test="style != null" >
+        #{style,jdbcType=VARCHAR},
+      </if>
+      <if test="sfdz != null" >
+        #{sfdz,jdbcType=VARCHAR},
+      </if>
+      <if test="syrq != null" >
+        #{syrq,jdbcType=VARCHAR},
+      </if>
+      <if test="jgrq != null" >
+        #{jgrq,jdbcType=DATE},
+      </if>
+      <if test="cpbt != null" >
+        #{cpbt,jdbcType=VARCHAR},
+      </if>
+      <if test="bz != null" >
+        #{bz,jdbcType=VARCHAR},
+      </if>
+      <if test="tplj != null" >
+        #{tplj,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="domain.ProductExample" resultType="java.lang.Integer" >
+    select count(*) from product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update product
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.cpm != null" >
+        cpm = #{record.cpm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hh != null" >
+        hh = #{record.hh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.txm != null" >
+        txm = #{record.txm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lb != null" >
+        lb = #{record.lb,jdbcType=VARCHAR},
+      </if>
+      <if test="record.style != null" >
+        style = #{record.style,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfdz != null" >
+        sfdz = #{record.sfdz,jdbcType=VARCHAR},
+      </if>
+      <if test="record.syrq != null" >
+        syrq = #{record.syrq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jgrq != null" >
+        jgrq = #{record.jgrq,jdbcType=DATE},
+      </if>
+      <if test="record.cpbt != null" >
+        cpbt = #{record.cpbt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bz != null" >
+        bz = #{record.bz,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tplj != null" >
+        tplj = #{record.tplj,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createBy != null" >
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateBy != null" >
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update product
+    set id = #{record.id,jdbcType=INTEGER},
+      cpm = #{record.cpm,jdbcType=VARCHAR},
+      hh = #{record.hh,jdbcType=VARCHAR},
+      txm = #{record.txm,jdbcType=VARCHAR},
+      lb = #{record.lb,jdbcType=VARCHAR},
+      style = #{record.style,jdbcType=VARCHAR},
+      sfdz = #{record.sfdz,jdbcType=VARCHAR},
+      syrq = #{record.syrq,jdbcType=VARCHAR},
+      jgrq = #{record.jgrq,jdbcType=DATE},
+      cpbt = #{record.cpbt,jdbcType=VARCHAR},
+      bz = #{record.bz,jdbcType=VARCHAR},
+      tplj = #{record.tplj,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      update_by = #{record.updateBy,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="domain.Product" >
+    update product
+    <set >
+      <if test="cpm != null" >
+        cpm = #{cpm,jdbcType=VARCHAR},
+      </if>
+      <if test="hh != null" >
+        hh = #{hh,jdbcType=VARCHAR},
+      </if>
+      <if test="txm != null" >
+        txm = #{txm,jdbcType=VARCHAR},
+      </if>
+      <if test="lb != null" >
+        lb = #{lb,jdbcType=VARCHAR},
+      </if>
+      <if test="style != null" >
+        style = #{style,jdbcType=VARCHAR},
+      </if>
+      <if test="sfdz != null" >
+        sfdz = #{sfdz,jdbcType=VARCHAR},
+      </if>
+      <if test="syrq != null" >
+        syrq = #{syrq,jdbcType=VARCHAR},
+      </if>
+      <if test="jgrq != null" >
+        jgrq = #{jgrq,jdbcType=DATE},
+      </if>
+      <if test="cpbt != null" >
+        cpbt = #{cpbt,jdbcType=VARCHAR},
+      </if>
+      <if test="bz != null" >
+        bz = #{bz,jdbcType=VARCHAR},
+      </if>
+      <if test="tplj != null" >
+        tplj = #{tplj,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="domain.Product" >
+    update product
+    set cpm = #{cpm,jdbcType=VARCHAR},
+      hh = #{hh,jdbcType=VARCHAR},
+      txm = #{txm,jdbcType=VARCHAR},
+      lb = #{lb,jdbcType=VARCHAR},
+      style = #{style,jdbcType=VARCHAR},
+      sfdz = #{sfdz,jdbcType=VARCHAR},
+      syrq = #{syrq,jdbcType=VARCHAR},
+      jgrq = #{jgrq,jdbcType=DATE},
+      cpbt = #{cpbt,jdbcType=VARCHAR},
+      bz = #{bz,jdbcType=VARCHAR},
+      tplj = #{tplj,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
