@@ -1,24 +1,233 @@
-<!DOCTYPE html>
 <html>
 <head>
-    <title>Bootstrap 模板</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 引入 Bootstrap -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- HTML5 Shiv 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
-    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
+    <meta charset="UTF-8"/>
+    <!--设置页面的宽度随着使用者的设备变化二变化 -->
+    <meta name="viewport" content="width=device-width,initial-scal=1">
+    <link rel="stylesheet" type="text/css" href="/furniture/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/furniture/layui/css/layui.css">
+    <script type="text/javascript" src="/furniture/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/furniture/layui/layui.js"></script>
+    <script type="text/javascript" src="/furniture/js/bootstrap.min.js"></script>
 </head>
 <body>
-<h1>Hello, world!</h1>
-
-<!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
-<script src="https://code.jquery.com/jquery.js"></script>
-<!-- 包括所有已编译的插件 -->
-<script src="js/bootstrap.min.js"></script>
+    <form role="form">
+        <div class="form-inline">
+            <label class="col-sm-2 control-label" for="cpm">产品名称：</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="cpm" type="text"/>
+            </div>
+        </div>
+        <div class="form-inline">
+            <label class="col-sm-2 control-label" for="hh">产品货号：</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="hh" type="text"/>
+            </div>
+        </div>
+        <div class="form-inline">
+            <label class="col-sm-2 control-label" for="txm">产品条形码：</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="txm" type="text"/>
+            </div>
+        </div>
+        <div class="form-inline">
+            <label class="control-label col-sm-2" for="lb">商品类目：</label>
+            <div class="col-sm-6">
+                <select id="lb" class="form-control">
+                    <option value="中国">中国</option>
+                    <option value="outher">其他</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-inline">
+            <label class="col-sm-2 control-label" for="style">商品风格：</label>
+            <div class="col-sm-4">
+                <input class="form-control" id="style" type="text"/>
+            </div>
+        </div>
+        <div class="form-inline">
+            <label class="control-label col-sm-2" for="sfdz">是否可定制：</label>
+            <div class="col-sm-4">
+                <select id="sfdz" class="form-control">
+                    <option value="1" selected>是</option>
+                    <option value="0">否</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-inline">
+            <label class="control-label col-sm-2" for="syrq">适用人群：</label>
+            <div class="col-sm-4">
+                <select id="syrq" class="form-control">
+                    <option value="中国" selected>是</option>
+                    <option value="outher">否</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-inline">
+            <label class="col-sm-2 control-label" for="jgrq">加工日期：</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="jgrq" type="text"/>
+            </div>
+        </div>
+        <div class="form-inline">
+            <label class="col-sm-2 control-label" for="cpbt">产品标题：</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="cpbt" type="text"/>
+            </div>
+        </div>
+        <div class="form-inline">
+            <label class="col-sm-2 control-label" for="bz">备注：</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="bz" type="text"/>
+            </div>
+        </div>
+        <div class="form-inline">
+            <label class="col-sm-2 control-label" for="imgPath">图片：</label>
+            <div class="col-sm-10">
+                <button type="button" class="layui-btn" id="imgPath">图片上传</button>
+                <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                    预览图：
+                    <div class="layui-upload-list" id="imgObject"></div>
+                </blockquote>
+            </div>
+        </div>
+        <!--<div class="form-inline">
+            <label class="col-sm-2 control-label" for="fj">附件：</label>
+            <div class="col-sm-10">
+                <button type="button" class="layui-btn layui-btn-normal" id="fj">选择文件</button>
+            </div>
+        </div>-->
+        <div class="form-group">
+            <div class="col-sm-6 col-sm-offset-3">
+                <input class="btn btn-primary" type="button" id="tijiao" onclick="addProduct()" value="提交"/>
+                <input class="btn btn-warning" type="button" id="resdata" value="重置"/>
+            </div>
+        </div>
+    </form>
+    <script type="text/javascript">
+        $(function () {
+            initSyrq();
+            initCplb();
+        });
+        var _filePath = [];
+        var _imgPath = [];
+        layui.use(['laydate','upload'],function(){
+            var laydate = layui.laydate;
+            var upload = layui.upload;
+            //日期时间选择器
+            laydate.render({
+                elem: '#jgrq'
+                ,type: 'datetime'
+            });
+            upload.render({
+                elem: '#imgPath'
+                ,url: '/furniture/common/uploadImg' //改成您自己的上传接口
+                ,size: 10240
+                ,multiple: true
+                ,before: function(obj){
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function(index, file, result){
+                        $('#imgObject').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img" width="100px" height="100px">')
+                        console.log(file.name)
+                        _imgPath.push("C:/img/"+file.name);
+                    });
+                }
+                ,done: function(res){
+                    if(res == "500"){
+                        layer.msg('上传失败');
+                    }else{
+                        layer.msg('上传成功');
+                    }
+                }
+            });
+            upload.render({
+                elem: '#fj'
+                ,url: '/furniture/common/uploadImg' //改成您自己的上传接口
+                ,auto: false
+                ,size: 10240
+                ,bindAction: '#tijiao'
+                ,done: function(res){
+                    if(res == "500"){
+                        layer.msg('上传失败');
+                    }else{
+                        layer.msg('上传成功');
+                        _filePath.push(res);
+                    }
+                }
+            });
+        });
+        function initSyrq(){
+            $.ajax({
+               url: '/furniture/common/getSyrq',
+               type: 'GET',
+               contentType: 'application/json',
+               success: function (data) {
+                    if(data !=null){
+                        var syrq = $("#syrq");
+                        syrq.empty();
+                        syrq.append('<option value="0">请选择</option>');
+                        for(var i=0;i<data.length;i++){
+                            syrq.append('<option value="'+data[i].id+'">'+data[i].name+'</option>');
+                        }
+                    }
+               }
+            });
+        }
+        function initCplb() {
+            $.ajax({
+                url: '/furniture/common/getCplb',
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (data) {
+                    if (data != null) {
+                        var lb = $("#lb");
+                        lb.empty();
+                        lb.append('<option value="0">请选择</option>');
+                        for (var i = 0; i < data.length; i++) {
+                            lb.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                        }
+                    }
+                }
+            });
+        }
+        function addImage(){
+            var ids = "";
+            $.ajax({
+                url: '/furniture/photo/add',
+                type: 'POST',
+                contentType: 'application/json',
+                data:JSON.stringify(_imgPath),
+                async:false,
+                success:function (data) {
+                    ids = data;
+                    _imgPath = [];
+                }
+            });
+            return ids;
+        }
+        function addProduct(){
+            var tplj = addImage();
+            var lb = $("#lb").find("option:selected").val();
+            var sfdz = $("#sfdz").find("option:selected").val();
+            var syrq = $("#syrq").find("option:selected").val();
+            var jgrq = $("#jgrq").val();
+            var param = "{\"cpm\":\""+$("#cpm").val()+"\",\"hh\":\""+$("#hh").val()+"\"," +
+                "\"txm\":\""+$("#txm").val()+"\",\"lb\":\""+lb+"\",\"style\":\""+$("#style").val()+"\"," +
+                "\"sfdz\":\""+sfdz+"\",\"syrq\":\""+syrq+"\",\"jgrq\":\""+jgrq+"\"," +
+                "\"cpbt\":\""+$("#cpbt").val()+"\",\"bz\":\""+$("#bz").val()+"\",\"tplj\":\""+tplj+"\"}";
+            $.ajax({
+                url: '/furniture/product/add',
+                type: 'POST',
+                contentType: 'application/json',
+                data:param,
+                success:function (data) {
+                    if(data>0){
+                        layer.msg("保存成功");
+                    }else{
+                        layer.msg("保存失败");
+                    }
+                }
+            })
+        }
+    </script>
 </body>
 </html>

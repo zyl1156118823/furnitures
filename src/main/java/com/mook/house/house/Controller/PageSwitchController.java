@@ -32,6 +32,11 @@ public class PageSwitchController {
         return "admin";
     }
 
+    @GetMapping("/add")
+    public String toAddProduct(){
+        return "productadd";
+    }
+
 
     @RequestMapping("/dologin")
     @ResponseBody

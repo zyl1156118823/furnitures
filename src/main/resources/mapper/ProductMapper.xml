@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mook.house.house.Mapper.ProductDao">
+    <insert id="addProduct" parameterType="domain.Product">
+        insert into Product(id,cpm,hh,txm,lb,style,sfdz,syrq,jgrq,cpbt,bz,tplj,create_time,create_by)
+        values(#{id},#{cpm},#{hh},#{txm},#{lb},#{style},#{sfdz},#{syrq},#{jgrq},#{cpbt},#{bz},#{tplj},#{createTime},#{createBy})
+    </insert>
+    <select id="getMaxId" resultType="java.lang.Integer">
+        select max(id) from Product
+    </select>
+</mapper>
